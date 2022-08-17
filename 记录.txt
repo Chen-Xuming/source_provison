@@ -1,0 +1,323 @@
+2022-7-13
+1. 100,200实验的 到达率、服务率是(50,60)， (500,600)
+2. 300,400,500实验的 到达率、服务率是（50，60），（1000，1200）
+
+-----------------------
+2022-7-23
+greedy算法每次增加多个服务器个数的观察
+
+1. 当server分别为1, 2时，(user=100,200),
+    假设server=2分配了k次，那么这k次分配选中的最大时延和server=1前k次选中的最大时延基本一样，而server=1在k轮后还有预算继续分配，因此最终的最大时延更小。
+
+情况1： 每一轮的最大时延都一样，但是因为预算不够，server=2提前终止，而server=1继续降低最大时延
+    server = 1，2
+    users = 100
+    seed = 27357260251672763106192180260507998059
+            5646630586032672322413760579212489169
+
+情况2： price 影响选择最佳的服务，以至于中途跑偏。 service C 价格问题？价格太贵了，例如55
+    server = 1，2
+    users = 100
+    seed = 131354799357392105933350882161709207040
+
+    被C带偏
+    seed = 131354799357392105933350882161709207040
+
+情况3：关于max_delay连续相同。这种情况不多，但是user_j连续相同的情况挺多
+        而且就算连续相同，每次选择的服务也不同，所以没办法一步到位
+
+7-30
+---------------------------
+思考：借鉴姚老师论文的思想?
+while 预算足够：
+    使用greedy算法分配
+    检查
+
+
+问题记录：
+1. 如果同组用户关联的R相同，那么他们关联的C必须相同；而B和C又是一一对应，那么他们管理的B也相同
+
+现象记录：
+1. pulp绝大部分的服务的服务器要么一个也没有增加，要么只增加一个。极少大于1个
+
+
+
+
+
+
+# services.append({
+#     "service": "a",
+#     "reduction": self._env._service_A[user_i._service_a].reduction_of_delay_when_add_a_server(),
+#     "price": self._env._service_A[user_i._service_a]._price
+# })
+# services.append({
+#     "service": "b0",
+#     "reduction": self._env._service_b0.reduction_of_delay_when_add_a_server(),
+#     "price": self._env._service_b0._price
+# })
+# services.append({
+#     "service": "b",
+#     "reduction": self._env._service_B[user_j._service_b].reduction_of_delay_when_add_a_server(),
+#     "price": self._env._service_B[user_j._service_b]._price
+# })
+# services.append({
+#     "service": "c",
+#     "reduction": self._env._service_C[user_j._service_c][user_j._sub_service_c].reduction_of_delay_when_add_a_server(),
+#     "price": self._env._service_C[user_j._service_c][user_j._sub_service_c]._price
+# })
+# services.append({
+#     "service": "r",
+#     "reduction": self._env._service_R[user_j._service_r][user_j._sub_service_r].reduction_of_delay_when_add_a_server(),
+#     "price": self._env._service_R[user_j._service_r][user_j._sub_service_r]._price
+# })
+
+
+------------------------------
+8-7
+compute_min_sum_allocation_solution
+                if w == len(self._constraints) - 1:
+                    weight = 1-lambda_k       # ?
+
+
+
+
+(b, 7),  max_delay = 0.13172216025664882, user_pair:(26, 61)
+(c, (2, 1)),  max_delay = 0.12848354261219275, user_pair:(26, 17)
+(c, (2, 0)),  max_delay = 0.12548354261219277, user_pair:(26, 2)
+(c, (2, 3)),  max_delay = 0.11115940352215606, user_pair:(26, 76)
+(r, (1, 2)),  max_delay = 0.1086017563417946, user_pair:(26, 33)
+(c, (2, 2)),  max_delay = 0.10844180781743802, user_pair:(26, 29)
+(r, (1, 0)),  max_delay = 0.10660175634179461, user_pair:(26, 3)
+(r, (6, 4)),  max_delay = 0.10588416063707656, user_pair:(26, 47)
+(r, (8, 4)),  max_delay = 0.1050933960020791, user_pair:(26, 61)
+(r, (6, 0)),  max_delay = 0.10188416063707656, user_pair:(26, 9)
+(r, (8, 1)),  max_delay = 0.10124920860485809, user_pair:(26, 17)
+(r, (6, 3)),  max_delay = 0.10088416063707656, user_pair:(26, 39)
+(r, (1, 4)),  max_delay = 0.09994992845499293, user_pair:(26, 88)
+(r, (9, 1)),  max_delay = 0.09964720999567643, user_pair:(26, 31)
+(r, (8, 3)),  max_delay = 0.09943454081796833, user_pair:(26, 44)
+(r, (8, 0)),  max_delay = 0.09824920860485808, user_pair:(26, 2)
+(c, (2, 4)),  max_delay = 0.09823092404247571, user_pair:(26, 84)
+(r, (9, 6)),  max_delay = 0.09299538210887476, user_pair:(26, 90)
+(b, 8),  max_delay = 0.0928763583706419, user_pair:(26, 75)
+(r, (8, 2)),  max_delay = 0.09286323374894626, user_pair:(26, 30)
+(b, 3),  max_delay = 0.09272227197054643, user_pair:(26, 33)
+(c, (0, 3)),  max_delay = 0.0919397914011915, user_pair:(26, 70)
+(c, (3, 1)),  max_delay = 0.08828308913330633, user_pair:(26, 33)
+(r, (6, 5)),  max_delay = 0.08805166120732436, user_pair:(26, 71)
+(c, (3, 2)),  max_delay = 0.08725856652122273, user_pair:(26, 47)
+(c, (0, 1)),  max_delay = 0.08702144897531257, user_pair:(26, 42)
+(c, (3, 0)),  max_delay = 0.08628308913330633, user_pair:(26, 3)
+(r, (1, 1)),  max_delay = 0.08612962550421345, user_pair:(26, 13)
+(c, (0, 4)),  max_delay = 0.08407044408374476, user_pair:(26, 88)
+(c, (0, 5)),  max_delay = 0.08393214969155588, user_pair:(26, 90)
+(r, (1, 3)),  max_delay = 0.08392506951482137, user_pair:(26, 76)
+(c, (0, 2)),  max_delay = 0.08241287758780967, user_pair:(26, 66)
+(r, (9, 0)),  max_delay = 0.08217507915809527, user_pair:(26, 25)
+(r, (9, 5)),  max_delay = 0.081896731171321, user_pair:(26, 80)
+(a, 6),  max_delay = 0.08152895760510813, user_pair:(26, 49)
+(a, 4),  max_delay = 0.08047351076883937, user_pair:(19, 49)
+(r, (2, 3)),  max_delay = 0.07646156996629191, user_pair:(9, 49)
+(c, (0, 0)),  max_delay = 0.07635713125886548, user_pair:(9, 26)
+(r, (6, 1)),  max_delay = 0.07614008617128712, user_pair:(9, 12)
+(r, (6, 2)),  max_delay = 0.07614008617128712, user_pair:(9, 29)
+(r, (2, 0)),  max_delay = 0.07603287703531401, user_pair:(9, 0)
+(r, (9, 3)),  max_delay = 0.0758293435325048, user_pair:(9, 51)
+(b, 0),  max_delay = 0.07558766735866737, user_pair:(9, 70)
+(r, (2, 2)),  max_delay = 0.07369173221942477, user_pair:(9, 24)
+(r, (2, 4)),  max_delay = 0.07347716508501781, user_pair:(9, 69)
+(b, 7),  max_delay = 0.07269173221942477, user_pair:(9, 91)
+
+
+
+
+
+
+
+
+
+----------------------
+C:\Users\doris\anaconda3\envs\py37\python.exe F:/projects/source_provison_interactive_application/test_env2.py
+seed = 256298045951173193834638297830043919441
+initial max interaction delay: [ 5.1556821610239085 ] cost  1216  budget  1316
+service_to_add: {'service': 'c', 'reduction': 4.997852349880917, 'price': 3, 'id': (7, 1)}
+max_delay = 5.144186102508374
+service_to_add: {'service': 'c', 'reduction': 4.997852349880917, 'price': 3, 'id': (7, 2)}
+max_delay = 5.143707455594676
+service_to_add: {'service': 'c', 'reduction': 4.997852349880917, 'price': 3, 'id': (7, 3)}
+max_delay = 5.1410490266434
+service_to_add: {'service': 'c', 'reduction': 4.997852349880917, 'price': 3, 'id': (7, 4)}
+max_delay = 5.140721755078431
+service_to_add: {'service': 'c', 'reduction': 4.997852349880917, 'price': 3, 'id': (7, 0)}
+max_delay = 0.2696011256726209
+service_to_add: {'service': 'a', 'reduction': 0.08101010971690316, 'price': 1, 'id': (6, None)}
+max_delay = 0.20650917164963253
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 5, 'id': (5, 2)}
+max_delay = 0.20350917164963256
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 5, 'id': (5, 1)}
+max_delay = 0.20002571618714365
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 2, 'id': (8, 1)}
+max_delay = 0.19914557467008318
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 5, 'id': (5, 3)}
+max_delay = 0.19886254391068903
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 4, 'id': (2, 2)}
+max_delay = 0.19814557467008317
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 5, 'id': (5, 4)}
+max_delay = 0.19466692775638575
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 5, 'id': (5, 0)}
+max_delay = 0.19049494807726222
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 4, 'id': (2, 0)}
+max_delay = 0.18879058188970288
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 2, 'id': (8, 4)}
+max_delay = 0.1837603442802195
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 2, 'id': (8, 3)}
+max_delay = 0.18029452337416746
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 2, 'id': (8, 0)}
+max_delay = 0.17999427523273956
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 4, 'id': (2, 1)}
+max_delay = 0.1797603442802195
+service_to_add: {'service': 'c', 'reduction': 0.09594113803963455, 'price': 2, 'id': (8, 2)}
+max_delay = 0.1582425076544599
+service_to_add: {'service': 'b', 'reduction': 0.053563855664298804, 'price': 1, 'id': (6, None)}
+max_delay = 0.15254404040457792
+service_to_add: {'service': 'r', 'reduction': 0.02174169087434024, 'price': 1, 'id': (8, 3)}
+max_delay = 0.1413089061071372
+service_to_add: {'service': 'c', 'reduction': 0.04745400290071318, 'price': 3, 'id': (1, 0)}
+max_delay = 0.13687388392430738
+service_to_add: {'service': 'c', 'reduction': 0.04745400290071318, 'price': 5, 'id': (9, 1)}
+max_delay = 0.13533964533798312
+service_to_add: {'service': 'c', 'reduction': 0.022912314464123767, 'price': 1, 'id': (3, 1)}
+max_delay = 0.1344721068739692
+service_to_add: {'service': 'c', 'reduction': 0.022912314464123767, 'price': 1, 'id': (3, 3)}
+max_delay = 0.13334850016165914
+service_to_add: {'service': 'c', 'reduction': 0.04745400290071318, 'price': 3, 'id': (1, 1)}
+max_delay = 0.1308023495302377
+service_to_add: {'service': 'c', 'reduction': 0.04745400290071318, 'price': 3, 'id': (1, 4)}
+max_delay = 0.12881284759160178
+service_to_add: {'service': 'c', 'reduction': 0.04745400290071318, 'price': 3, 'id': (1, 2)}
+max_delay = 0.12767577172662845
+service_to_add: {'service': 'c', 'reduction': 0.04745400290071318, 'price': 3, 'id': (1, 3)}
+max_delay = 0.12751170092849112
+service_to_add: {'service': 'c', 'reduction': 0.022912314464123767, 'price': 1, 'id': (3, 5)}
+max_delay = 0.12724886192533735
+service_to_add: {'service': 'c', 'reduction': 0.04745400290071318, 'price': 5, 'id': (9, 5)}
+max_delay = 0.12697610785081004
+service_to_add: {'service': 'c', 'reduction': 0.04745400290071318, 'price': 5, 'id': (9, 0)}
+max_delay = 0.12697610785081004
+service_to_add: {'service': 'b', 'reduction': 0.003190907210003159, 'price': 2, 'id': (9, None)}
+max_delay = 0.12634202741531225
+final max interaction delay [ 0.12634202741531225 ] cost  1316  budget  1316
+(c, (7, 1)),  max_delay = 5.1556821610239085, user_pair:(9, 47)
+(c, (7, 2)),  max_delay = 5.144186102508374, user_pair:(9, 54)
+(c, (7, 3)),  max_delay = 5.143707455594676, user_pair:(9, 89)
+(c, (7, 4)),  max_delay = 5.1410490266434, user_pair:(9, 98)
+(c, (7, 0)),  max_delay = 5.140721755078431, user_pair:(9, 9)
+(a, 6),  max_delay = 0.2696011256726209, user_pair:(9, 79)
+(c, (5, 2)),  max_delay = 0.20650917164963253, user_pair:(26, 79)
+(c, (5, 1)),  max_delay = 0.20350917164963256, user_pair:(26, 67)
+(c, (8, 1)),  max_delay = 0.20002571618714365, user_pair:(26, 36)
+(c, (5, 3)),  max_delay = 0.19914557467008318, user_pair:(26, 86)
+(c, (2, 2)),  max_delay = 0.19886254391068903, user_pair:(26, 82)
+(c, (5, 4)),  max_delay = 0.19814557467008317, user_pair:(26, 91)
+(c, (5, 0)),  max_delay = 0.19466692775638575, user_pair:(26, 16)
+(c, (2, 0)),  max_delay = 0.19049494807726222, user_pair:(26, 39)
+(c, (8, 4)),  max_delay = 0.18879058188970288, user_pair:(26, 76)
+(c, (8, 3)),  max_delay = 0.1837603442802195, user_pair:(26, 55)
+(c, (8, 0)),  max_delay = 0.18029452337416746, user_pair:(26, 25)
+(c, (2, 1)),  max_delay = 0.17999427523273956, user_pair:(26, 71)
+(c, (8, 2)),  max_delay = 0.1797603442802195, user_pair:(26, 40)
+(b, 6),  max_delay = 0.1582425076544599, user_pair:(26, 51)
+(r, (8, 3)),  max_delay = 0.15254404040457792, user_pair:(26, 78)
+(c, (1, 0)),  max_delay = 0.1413089061071372, user_pair:(26, 24)
+(c, (9, 1)),  max_delay = 0.13687388392430738, user_pair:(26, 22)
+(c, (3, 1)),  max_delay = 0.13533964533798312, user_pair:(26, 13)
+(c, (3, 3)),  max_delay = 0.1344721068739692, user_pair:(26, 60)
+(c, (1, 1)),  max_delay = 0.13334850016165914, user_pair:(26, 37)
+(c, (1, 4)),  max_delay = 0.1308023495302377, user_pair:(26, 78)
+(c, (1, 2)),  max_delay = 0.12881284759160178, user_pair:(26, 49)
+(c, (1, 3)),  max_delay = 0.12767577172662845, user_pair:(26, 59)
+(c, (3, 5)),  max_delay = 0.12751170092849112, user_pair:(26, 99)
+(c, (9, 5)),  max_delay = 0.12724886192533735, user_pair:(26, 85)
+(c, (9, 0)),  max_delay = 0.12697610785081004, user_pair:(26, 14)
+(b, 9),  max_delay = 0.12697610785081004, user_pair:(26, 68)
+
+233.19721221923828
+0.12634202741531225
+
+进程已结束,退出代码0
+
+
+
+1. 常数项的影响
+2. UB-LB / LB > a
+3. 强约束
+4. 初始化服务器个数的方式
+
+PULP解的状态：
+my_lp_problem.solve()
+pulp.LpStatus[my_lp_problem.status]
+
+We have also checked the status of the solver, there are 5 status codes:
+
+Not Solved: Status prior to solving the problem.
+Optimal: An optimal solution has been found.
+Infeasible: There are no feasible solutions (e.g. if you set the constraints x <= 1 and x >=2).
+Unbounded: The constraints are not bounded, maximising the solution will tend towards infinity (e.g. if the only constraint was x >= 3).
+Undefined: The optimal solution may exist but may not have been found.
+
+
+2022-8-15 todo:
+0. line_search返回的是哪个lambda?
+1. line_search返回的lower_bound是不是最优的（最大的），可以用线性搜索和二分搜索对比以下，看看二分搜索正不正确
+
+2. 观察5s例子（常数项修改为1/10）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
